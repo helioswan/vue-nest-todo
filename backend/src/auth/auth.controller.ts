@@ -9,11 +9,17 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  async signup(@Body() signupDto: SignupDto) {}
+  async signup(@Body() signupDto: SignupDto) {
+    return this.authService.signup(signupDto);
+  }
 
   @Post('login')
-  login(@Body() loginDto: LoginDto) {}
+  login(@Body() loginDto: LoginDto) {
+    return this.authService.login(loginDto);
+  }
 
   @Post('refreshToken')
-  refresh(@Body() refreshTokenDto: RefreshTokenDto) {}
+  refresh(@Body() refreshTokenDto: RefreshTokenDto) {
+    return this.authService.refreshToken(refreshTokenDto);
+  }
 }

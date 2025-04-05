@@ -1,13 +1,16 @@
 services:
-  mongodb:
+  database:
     image: mongo
     restart: always
     ports:
-        - "27017:27017"
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     networks:
-      - app
-    env_file:
-      - .env
+      - backend
+    volumes:
+      - mongo-data:/data/db
 
   backend:
     build:
@@ -15,12 +18,18 @@ services:
       dockerfile: Dockerfile
       target: dev
     working_dir: /
-    env_file:
-      - .env
+    environment:
+      - DB_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - DB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - PORT=${BACKEND_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - DB_URI=${DB_URI}
+      - DB_NAME=${DB_NAME}
+
     depends_on:
-      - mongodb
+      - database
     networks:
-      - app
+      - backend
     ports:
       - 3000:3000
     command: [sh, -c, "npm run start:dev"]
@@ -28,7 +37,8 @@ services:
       - ./backend:/app
 
 networks:
-  app:
+  backend:
 
 volumes:
   backend:
+  mongo-data:
