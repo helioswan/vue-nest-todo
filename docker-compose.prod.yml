@@ -12,11 +12,11 @@ services:
     volumes:
       - mongo-data:/data/db
 
-  backend:
+  api:
     build:
       context: ./backend
       dockerfile: Dockerfile
-      target: dev
+      target: prod
     working_dir: /
     environment:
       - DB_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
@@ -31,7 +31,7 @@ services:
     networks:
       - backend
     ports:
-      - 3000:3000
+      - 3000:${BACKEND_PORT}
     command: [sh, -c, "npm run start:dev"]
     volumes:
       - ./backend:/app

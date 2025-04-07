@@ -1,17 +1,17 @@
 import { InjectModel } from '@nestjs/mongoose';
-import { LoginDto } from './dtos/login.dto';
-import { SignupDto } from './dtos/signup.dto';
+import { LoginDto } from './dto/login.dto';
+import { SignupDto } from './dto/signup.dto';
 import {
   ConflictException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User } from './schemas/user.schema';
+import { User } from '@users/schemas/user.schema';
 import { Model, ObjectId } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { RefreshToken } from './schemas/refresh-token.schema';
-import { RefreshTokenDto } from './dtos/refreshToken.dto';
+import { RefreshToken } from '../database/mongo/schema/refresh-token.schema';
+import { RefreshTokenDto } from './dto/refresh-dto.dto';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -35,28 +35,6 @@ export class AuthService {
     bcrypt.hash(password, 10, async (err: Error | undefined, hash: string) => {
       if (!err) await this.UserModel.create({ email, name, password: hash });
     });
-  }
-
-  async generateAccessToken(userId: ObjectId) {
-    const accessToken = this.jwtService.sign({ userId });
-    const refreshToken = uuidv4();
-
-    await this.storeRefreshToken(refreshToken, userId);
-    return {
-      accessToken,
-      refreshToken,
-    };
-  }
-
-  async storeRefreshToken(refreshToken: string, userId: ObjectId) {
-    const expiryDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
-    await this.RefreshTokenModel.findOneAndUpdate(
-      {
-        token: refreshToken,
-        userId,
-      },
-      { $set: { expiryDate: expiryDate } },
-    );
   }
 
   async login(loginDto: LoginDto) {
@@ -86,5 +64,27 @@ export class AuthService {
     }
 
     return this.generateAccessToken(storedRefreshToken.userId);
+  }
+
+  private async generateAccessToken(userId: ObjectId) {
+    const accessToken = this.jwtService.sign({ userId });
+    const refreshToken = uuidv4();
+
+    await this.storeRefreshToken(refreshToken, userId);
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  private async storeRefreshToken(refreshToken: string, userId: ObjectId) {
+    const expiryDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
+    await this.RefreshTokenModel.findOneAndUpdate(
+      {
+        token: refreshToken,
+        userId,
+      },
+      { $set: { expiryDate: expiryDate } },
+    );
   }
 }
