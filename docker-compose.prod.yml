@@ -17,7 +17,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: prod
-    working_dir: /
     environment:
       - DB_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - DB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
@@ -25,6 +24,7 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - DB_URI=${DB_URI}
       - DB_NAME=${DB_NAME}
+      - NODE_ENV=production
 
     depends_on:
       - database
@@ -32,7 +32,6 @@ services:
       - backend
     ports:
       - 3000:${BACKEND_PORT}
-    command: [sh, -c, "npm run start:dev"]
     volumes:
       - ./backend:/app
 
