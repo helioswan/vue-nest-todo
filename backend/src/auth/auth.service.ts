@@ -6,41 +6,39 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User } from '@users/schemas/user.schema';
 import { Model, ObjectId } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { RefreshToken } from '../database/mongo/schema/refresh-token.schema';
+import { RefreshToken } from './schemas/refresh-token.schema';
 import { RefreshTokenDto } from './dto/refresh-dto.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private UserModel: Model<User>,
     @InjectModel(RefreshToken.name)
     private RefreshTokenModel: Model<RefreshToken>,
+    private userService: UserService,
     private jwtService: JwtService,
   ) {}
 
   async signup(signupDto: SignupDto) {
     const { email, password, name } = signupDto;
 
-    const usedEmail = await this.UserModel.findOne({
-      email,
-    });
+    const usedEmail = await this.userService.findByEmail(email);
 
     if (usedEmail) throw new ConflictException('Email already used');
 
     bcrypt.hash(password, 10, async (err: Error | undefined, hash: string) => {
-      if (!err) await this.UserModel.create({ email, name, password: hash });
+      if (!err) await this.userService.create({ email, name, password: hash });
     });
   }
 
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
-    const user = await this.UserModel.findOne({ email });
+    const user = await this.userService.findByEmail(email);
 
     if (!user) throw new UnauthorizedException();
 
@@ -81,7 +79,6 @@ export class AuthService {
     const expiryDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
     await this.RefreshTokenModel.findOneAndUpdate(
       {
-        token: refreshToken,
         userId,
       },
       { $set: { expiryDate: expiryDate } },
