@@ -18,7 +18,7 @@ describe('AuthController', () => {
         refreshToken: 'mockRefreshToken',
       };
     }),
-    refreshToken: jest.fn((_refreshToken: RefreshTokenDto) => {
+    refreshToken: jest.fn(() => {
       return {
         accessToken: 'newAccessToken',
         refreshToken: 'newRefreshToken',

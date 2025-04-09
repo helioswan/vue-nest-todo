@@ -115,6 +115,12 @@ describe('AuthService', () => {
         email: 'email@adress.com',
         password: 'hashed',
       });
+      (mockUserService.findOne as jest.Mock).mockResolvedValue({
+        _id: '123456789',
+        name: 'Name',
+        email: 'email@adress.com',
+        password: 'hashed',
+      });
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
       (mockRefreshTokenModel.findOneAndUpdate as jest.Mock).mockResolvedValue({
         userId: 'user-id',
@@ -149,6 +155,12 @@ describe('AuthService', () => {
         userId: 'user-id',
         token: 'valid-token',
         expiryDate: new Date(Date.now() + 1000),
+      });
+      (mockUserService.findOne as jest.Mock).mockResolvedValue({
+        _id: '123456789',
+        name: 'Name',
+        email: 'email@adress.com',
+        password: 'hashed',
       });
 
       const dto: RefreshTokenDto = { refreshToken: 'valid-token' };
