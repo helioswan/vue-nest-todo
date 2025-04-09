@@ -1,0 +1,43 @@
+services:
+  database:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    networks:
+      - backend
+    volumes:
+      - mongo-data:/data/db
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: prod
+    environment:
+      - DB_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - DB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - PORT=${BACKEND_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - DB_URI=${DB_URI}
+      - DB_NAME=${DB_NAME}
+      - NODE_ENV=production
+
+    depends_on:
+      - database
+    networks:
+      - backend
+    ports:
+      - 3000:${BACKEND_PORT}
+    volumes:
+      - ./backend:/app
+
+networks:
+  backend:
+
+volumes:
+  backend:
+  mongo-data:
