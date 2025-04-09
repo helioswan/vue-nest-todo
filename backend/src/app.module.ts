@@ -5,7 +5,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
-
+import { BoardModule } from './board/board.module';
+import { ListModule } from './list/list.module';
+import { CardModule } from './card/card.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -34,6 +36,9 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     AuthModule,
     UserModule,
+    BoardModule,
+    ListModule,
+    CardModule,
   ],
 })
 export class AppModule {}
