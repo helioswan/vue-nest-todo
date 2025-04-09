@@ -1,0 +1,43 @@
+name: CI for NestJS Backend
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+          run:
+            shell: bash
+            working-directory: ./backend
+    strategy:
+      matrix:
+        node-version: [16, 18]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js for backend
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install backend dependencies
+      run: |
+        npm install
+
+    - name: Run backend lint
+      run: |
+        npm run lint
+
+    - name: Run backend tests
+      run: |
+        npm run test
+
+    - name: Build backend
+      run: |
+        npm run build
