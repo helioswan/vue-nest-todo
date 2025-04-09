@@ -6,6 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
+import { JwtPayload } from '../entities/jwt-payload.entity';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -20,7 +21,9 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      await this.jwt.verifyAsync(token);
+      console.log(token);
+      const payload = await this.jwt.verifyAsync<JwtPayload>(token);
+      request['user'] = payload;
       return true;
     } catch {
       throw new UnauthorizedException('Invalid token');
@@ -28,6 +31,7 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: Request) {
-    return request.headers.authorization?.split(' ')[1];
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }

@@ -7,29 +7,29 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class UserService {
-  @InjectModel(User.name) private UserModel: Model<User>;
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async create(createUserDto: CreateUserDto) {
-    return await this.UserModel.create(createUserDto);
+    return await this.userModel.create(createUserDto);
   }
 
-  async findAll() {
-    return await this.UserModel.find();
+  async findAll(): Promise<User[]> {
+    return await this.userModel.find();
   }
 
-  async findOne(id: number) {
-    return await this.UserModel.findById(id);
+  async findOne(id: string) {
+    return await this.userModel.findById(id);
   }
 
   async findByEmail(email: string) {
-    return await this.UserModel.findOne({ email });
+    return await this.userModel.findOne({ email });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    return await this.UserModel.findByIdAndUpdate(id, updateUserDto);
+    return await this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 
   async remove(id: number) {
-    return await this.UserModel.deleteOne({ _id: id });
+    return await this.userModel.deleteOne({ _id: id });
   }
 }

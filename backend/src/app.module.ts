@@ -1,15 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
-import { BoardModule } from './board/board.module';
-import { ListModule } from './list/list.module';
-import { CardModule } from './card/card.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,7 +21,7 @@ import { CardModule } from './card/card.module';
       ],
     }),
     MongooseModule.forRoot(process.env.DB_URI as string, {
-      dbName: process.env.DATABASE_NAME,
+      dbName: process.env.DB_NAME,
       auth: {
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
@@ -38,11 +34,6 @@ import { CardModule } from './card/card.module';
     }),
     AuthModule,
     UserModule,
-    BoardModule,
-    ListModule,
-    CardModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
