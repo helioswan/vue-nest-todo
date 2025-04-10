@@ -11,16 +11,13 @@ export class Task {
   description: string;
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Board' })
-  boardId: mongoose.Types.ObjectId;
-
-  @Prop()
-  position: number;
+  boardId: string;
 
   @Prop({ default: TaskStatus.TODO, type: String, enum: TaskStatus })
   state: TaskStatus;
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  userId: mongoose.Types.ObjectId;
+  userId: string;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

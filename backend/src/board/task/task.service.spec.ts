@@ -29,8 +29,6 @@ describe('TaskService', () => {
       findOneAndUpdate: jest.fn(),
       findById: jest.fn(),
       deleteOne: jest.fn(),
-      countDocuments: jest.fn(),
-      updateMany: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -74,17 +72,14 @@ describe('TaskService', () => {
       };
       const board = { _id: 'board-id', name: 'Test Board' }; // Mock board found
       (mockBoardService.findOne as jest.Mock).mockResolvedValue(board);
-      (mockTaskModel.countDocuments as jest.Mock).mockResolvedValue(2);
       (mockTaskModel.create as jest.Mock).mockResolvedValue({
         ...createTaskDto,
-        position: 2,
         userId: 'userId',
       });
 
       const result = await service.create(createTaskDto, 'userId');
       expect(result).toEqual({
         ...createTaskDto,
-        position: 2,
         userId: 'userId',
       });
     });
@@ -165,7 +160,6 @@ describe('TaskService', () => {
       (mockTaskModel.deleteOne as jest.Mock).mockResolvedValue({
         deletedCount: 1,
       });
-      (mockTaskModel.updateMany as jest.Mock).mockResolvedValue(task);
 
       await expect(service.remove('taskId', 'userId')).resolves.not.toThrow();
     });

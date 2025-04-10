@@ -23,13 +23,8 @@ export class TaskService {
     const board = await this.boardService.findOne(createTaskDto.boardId);
     if (!board) throw new NotFoundException();
 
-    const position = await this.taskModel.countDocuments({
-      boardId: board._id.toString(),
-    });
-
     return await this.taskModel.create({
       ...createTaskDto,
-      position,
       userId,
     });
   }
@@ -71,14 +66,5 @@ export class TaskService {
     if (result.deletedCount === 0) {
       throw new NotFoundException();
     }
-    await this.taskModel.updateMany(
-      {
-        boardId: task.boardId,
-        position: { $gt: task.position },
-      },
-      {
-        $inc: { position: -1 },
-      },
-    );
   }
 }
