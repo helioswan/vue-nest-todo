@@ -11,14 +11,14 @@ import {
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { ActiveUser } from 'src/auth/active-user.decorator';
-import { JwtPayload } from 'src/auth/entities/jwt-payload.entity';
+import { ActiveUser } from '../../auth/active-user.decorator';
+import { JwtPayload } from '../../auth/entities/jwt-payload.entity';
 
-@ApiBearerAuth()
 @UseGuards(AuthGuard)
-@Controller('tasks')
+@ApiBearerAuth()
+@Controller('task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 

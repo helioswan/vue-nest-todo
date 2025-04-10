@@ -23,10 +23,9 @@ export class TaskService {
     const board = await this.boardService.findOne(createTaskDto.boardId);
     if (!board) throw new NotFoundException();
 
-    const tasks = await this.taskModel.find({
+    const position = await this.taskModel.countDocuments({
       boardId: board._id.toString(),
     });
-    const position = tasks.length;
 
     return await this.taskModel.create({
       ...createTaskDto,
@@ -63,9 +62,23 @@ export class TaskService {
   }
 
   async remove(id: string, userId: string) {
+    const task = await this.taskModel.findOne({ _id: id, userId });
+    if (!task) {
+      throw new NotFoundException();
+    }
+
     const result = await this.taskModel.deleteOne({ _id: id, userId });
     if (result.deletedCount === 0) {
       throw new NotFoundException();
     }
+    await this.taskModel.updateMany(
+      {
+        boardId: task.boardId,
+        position: { $gt: task.position },
+      },
+      {
+        $inc: { position: -1 },
+      },
+    );
   }
 }
