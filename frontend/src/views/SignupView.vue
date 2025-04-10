@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import SignupForm from '../components/auth/SignupForm.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="flex items-center justify-center mt-16"><SignupForm /></div>
 </template>
