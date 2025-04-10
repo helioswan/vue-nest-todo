@@ -30,11 +30,8 @@ describe('AuthService', () => {
 
     mockUserService = {
       create: jest.fn(),
-      findAll: jest.fn(),
       findOne: jest.fn(),
       findByEmail: jest.fn(),
-      update: jest.fn(),
-      remove: jest.fn(),
     };
 
     mockBcrypt.compare = jest.fn();
