@@ -14,9 +14,13 @@ const schema = z.object({
       required_error: 'Email is required',
     })
     .email('Enter an email address in the correct format, like name@example.com '),
-  password: z.string({
-    required_error: 'Password is required',
-  }),
+  password: z
+    .string({
+      required_error: 'Password is required',
+    })
+    .regex(/\d/, { message: 'At least 1 number - Requirement not met' })
+    .regex(/[a-z]/, { message: 'At least 1 lowercase letter - Requirement not met' })
+    .regex(/[A-Z]/, { message: 'At least 1 uppercase letter - Requirement not met' }),
 })
 
 type Schema = z.output<typeof schema>
@@ -41,7 +45,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </div>
     <UForm :schema="schema" :state="state" class="space-y-6" @submit="onSubmit">
       <UFormField label="Username" name="username" required>
-        <UInput v-model="state.email" placeholder="Enter your username" class="block" />
+        <UInput v-model="state.username" placeholder="Enter your username" class="block" />
       </UFormField>
 
       <UFormField label="Email" name="email" required hint="Exemple : name@example.com">
