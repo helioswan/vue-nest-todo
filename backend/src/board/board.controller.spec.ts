@@ -64,7 +64,7 @@ describe('BoardController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('create()', () => {
+  describe('create', () => {
     it('should create a board with user id', async () => {
       const dto: CreateBoardDto = { title: 'My Board' };
       (mockBoardService.create as jest.Mock).mockResolvedValue(board);
@@ -79,7 +79,7 @@ describe('BoardController', () => {
     });
   });
 
-  describe('findMyBoards()', () => {
+  describe('findMyBoards', () => {
     it('should return all boards for the user', async () => {
       (mockBoardService.findMyBoards as jest.Mock).mockResolvedValue(boards);
 
@@ -93,7 +93,7 @@ describe('BoardController', () => {
     });
   });
 
-  describe('findOne()', () => {
+  describe('findOne', () => {
     it('should return a board by id', async () => {
       (mockBoardService.findOne as jest.Mock).mockResolvedValue(board);
 
@@ -107,7 +107,7 @@ describe('BoardController', () => {
     });
   });
 
-  describe('getTasks()', () => {
+  describe('getTasks', () => {
     it('should return all tasks for a board', async () => {
       const tasks = [{ _id: 't1', boardId: '1', title: 'Task 1' }];
       (mockTaskService.findTasksByBoard as jest.Mock).mockResolvedValue(tasks);
@@ -122,7 +122,7 @@ describe('BoardController', () => {
     });
   });
 
-  describe('update()', () => {
+  describe('update', () => {
     it('should update a board by id and user', async () => {
       const dto: UpdateBoardDto = { title: 'Updated Title' };
       const updated = { _id: '1', title: 'Updated Title' };
@@ -138,7 +138,7 @@ describe('BoardController', () => {
     });
   });
 
-  describe('remove()', () => {
+  describe('remove', () => {
     it('should remove a board by id and user', async () => {
       const serviceResponse = { deletedCount: 1 };
       (mockBoardService.remove as jest.Mock).mockResolvedValue(serviceResponse);
