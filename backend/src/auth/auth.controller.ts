@@ -10,16 +10,28 @@ export class AuthController {
 
   @Post('signup')
   async signup(@Body() signupDto: SignupDto) {
-    return this.authService.signup(signupDto);
+    const user = await this.authService.signup(signupDto);
+    return {
+      message: 'User successfully registered',
+      user,
+    };
   }
 
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  async login(@Body() loginDto: LoginDto) {
+    const tokens = await this.authService.login(loginDto);
+    return {
+      message: 'User successfully logged in',
+      data: tokens,
+    };
   }
 
   @Post('refreshToken')
-  refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
-    return this.authService.refreshToken(refreshTokenDto);
+  async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
+    const tokens = await this.authService.refreshToken(refreshTokenDto);
+    return {
+      message: 'Access token successfully refreshed',
+      data: tokens,
+    };
   }
 }

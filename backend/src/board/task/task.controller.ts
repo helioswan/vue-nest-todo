@@ -23,31 +23,57 @@ export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post()
-  create(@Body() createTaskDto: CreateTaskDto, @ActiveUser() user: JwtPayload) {
-    return this.taskService.create(createTaskDto, user.sub);
+  async create(
+    @Body() createTaskDto: CreateTaskDto,
+    @ActiveUser() user: JwtPayload,
+  ) {
+    const task = await this.taskService.create(createTaskDto, user.sub);
+    return {
+      message: 'Task successfully created',
+      task,
+    };
   }
 
   @Get()
-  findAll(@ActiveUser() user: JwtPayload) {
-    return this.taskService.findAll(user.sub);
+  async findAll(@ActiveUser() user: JwtPayload) {
+    const tasks = await this.taskService.findAll(user.sub);
+    return {
+      message: 'Tasks successfully retrieved',
+      tasks,
+    };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.taskService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const task = await this.taskService.findOne(id);
+    return {
+      message: 'Task successfully retrieved',
+      task,
+    };
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateTaskDto: UpdateTaskDto,
     @ActiveUser() user: JwtPayload,
   ) {
-    return this.taskService.update(id, updateTaskDto, user.sub);
+    const updatedTask = await this.taskService.update(
+      id,
+      updateTaskDto,
+      user.sub,
+    );
+    return {
+      message: 'Task successfully updated',
+      updatedTask,
+    };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @ActiveUser() user: JwtPayload) {
-    return this.taskService.remove(id, user.sub);
+  async remove(@Param('id') id: string, @ActiveUser() user: JwtPayload) {
+    await this.taskService.remove(id, user.sub);
+    return {
+      message: 'Task successfully removed',
+    };
   }
 }

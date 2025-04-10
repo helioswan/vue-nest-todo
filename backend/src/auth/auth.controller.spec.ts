@@ -48,13 +48,15 @@ describe('AuthController', () => {
       };
 
       const result = await controller.signup(dto);
-
-      expect(mockAuthService.signup).toHaveBeenCalledWith(dto);
       expect(result).toEqual({
-        email: 'email@adress.com',
-        id: '123456789',
-        name: 'Test',
+        message: 'User successfully registered',
+        user: {
+          email: dto.email,
+          id: '123456789',
+          name: dto.name,
+        },
       });
+      expect(mockAuthService.signup).toHaveBeenCalledWith(dto);
     });
   });
 
@@ -66,8 +68,11 @@ describe('AuthController', () => {
 
       expect(mockAuthService.login).toHaveBeenCalledWith(dto);
       expect(result).toEqual({
-        accessToken: 'mockAccessToken',
-        refreshToken: 'mockRefreshToken',
+        message: 'User successfully logged in',
+        data: {
+          accessToken: 'mockAccessToken',
+          refreshToken: 'mockRefreshToken',
+        },
       });
     });
   });
@@ -80,8 +85,11 @@ describe('AuthController', () => {
 
       expect(mockAuthService.refreshToken).toHaveBeenCalledWith(dto);
       expect(result).toEqual({
-        accessToken: 'newAccessToken',
-        refreshToken: 'newRefreshToken',
+        message: 'Access token successfully refreshed',
+        data: {
+          accessToken: 'newAccessToken',
+          refreshToken: 'newRefreshToken',
+        },
       });
     });
   });

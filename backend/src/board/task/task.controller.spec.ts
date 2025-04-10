@@ -60,9 +60,16 @@ describe('TaskController', () => {
       ...createTaskDto,
     });
 
+    const response = {
+      message: 'Task successfully created',
+      task: {
+        id: '1',
+        ...createTaskDto,
+      },
+    };
     const result = await controller.create(createTaskDto, user);
 
-    expect(result).toEqual({ id: '1', ...createTaskDto });
+    expect(result).toEqual(response);
     expect(mockTaskService.create).toHaveBeenCalledWith(
       createTaskDto,
       user.sub,
@@ -74,11 +81,13 @@ describe('TaskController', () => {
       { id: '1', title: 'Task 1', description: 'Task 1 description' },
     ]);
 
+    const reponse = {
+      message: 'Tasks successfully retrieved',
+      tasks: [{ id: '1', title: 'Task 1', description: 'Task 1 description' }],
+    };
     const result = await controller.findAll(user);
 
-    expect(result).toEqual([
-      { id: '1', title: 'Task 1', description: 'Task 1 description' },
-    ]);
+    expect(result).toEqual(reponse);
     expect(mockTaskService.findAll).toHaveBeenCalledWith(user.sub);
   });
 
@@ -91,13 +100,16 @@ describe('TaskController', () => {
       description: 'Task 1 description',
     });
 
+    const response = {
+      message: 'Task successfully retrieved',
+      task: {
+        id: taskId,
+        title: 'Task 1',
+        description: 'Task 1 description',
+      },
+    };
     const result = await controller.findOne(taskId);
-
-    expect(result).toEqual({
-      id: taskId,
-      title: 'Task 1',
-      description: 'Task 1 description',
-    });
+    expect(result).toEqual(response);
     expect(mockTaskService.findOne).toHaveBeenCalledWith(taskId);
   });
 
@@ -113,9 +125,15 @@ describe('TaskController', () => {
       ...updateTaskDto,
     });
 
+    const response = {
+      message: 'Task successfully updated',
+      updatedTask: {
+        id: taskId,
+        ...updateTaskDto,
+      },
+    };
     const result = await controller.update(taskId, updateTaskDto, user);
-
-    expect(result).toEqual({ id: taskId, ...updateTaskDto });
+    expect(result).toEqual(response);
     expect(mockTaskService.update).toHaveBeenCalledWith(
       taskId,
       updateTaskDto,
@@ -132,13 +150,12 @@ describe('TaskController', () => {
       description: 'Task 1 description',
     });
 
-    const result = await controller.remove(taskId, user);
+    const response = {
+      message: 'Task successfully removed',
+    };
 
-    expect(result).toEqual({
-      id: taskId,
-      title: 'Task 1',
-      description: 'Task 1 description',
-    });
+    const result = await controller.remove(taskId, user);
+    expect(result).toEqual(response);
     expect(mockTaskService.remove).toHaveBeenCalledWith(taskId, user.sub);
   });
 });
