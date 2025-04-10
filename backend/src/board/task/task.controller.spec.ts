@@ -9,6 +9,7 @@ describe('TaskController', () => {
   let controller: TaskController;
   let mockTaskService: Partial<TaskService>;
   let mockAuthGuard: Partial<AuthGuard>;
+  let user: JwtPayload;
 
   beforeEach(async () => {
     mockTaskService = {
@@ -22,6 +23,12 @@ describe('TaskController', () => {
 
     mockAuthGuard = {
       canActivate: jest.fn().mockReturnValue(true),
+    };
+
+    user = {
+      sub: 'user-id',
+      username: 'user',
+      email: 'email@adress.com',
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -47,11 +54,6 @@ describe('TaskController', () => {
       description: 'Task description',
       boardId: 'board-id',
     };
-    const user: JwtPayload = {
-      sub: 'user-id',
-      username: 'user',
-      email: 'email@adress.com',
-    };
 
     (mockTaskService.create as jest.Mock).mockResolvedValue({
       id: '1',
@@ -68,12 +70,6 @@ describe('TaskController', () => {
   });
 
   it('should get all tasks for the user', async () => {
-    const user: JwtPayload = {
-      sub: 'user-id',
-      username: 'user',
-      email: 'email@adress.com',
-    };
-
     (mockTaskService.findAll as jest.Mock).mockResolvedValue([
       { id: '1', title: 'Task 1', description: 'Task 1 description' },
     ]);
@@ -111,11 +107,6 @@ describe('TaskController', () => {
       title: 'Updated Task',
       description: 'Updated description',
     };
-    const user: JwtPayload = {
-      sub: 'user-id',
-      username: 'user',
-      email: 'email@adress.com',
-    };
 
     (mockTaskService.update as jest.Mock).mockResolvedValue({
       id: taskId,
@@ -134,11 +125,6 @@ describe('TaskController', () => {
 
   it('should delete a task', async () => {
     const taskId = '1';
-    const user: JwtPayload = {
-      sub: 'user-id',
-      username: 'user',
-      email: 'email@adress.com',
-    };
 
     (mockTaskService.remove as jest.Mock).mockResolvedValue({
       id: taskId,
