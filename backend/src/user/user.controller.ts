@@ -1,9 +1,9 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { ActiveUser } from 'src/auth/active-user.decorator';
-import { JwtPayload } from 'src/auth/entities/jwt-payload.entity';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { ActiveUser } from '../auth/active-user.decorator';
+import { JwtPayload } from '../auth/entities/jwt-payload.entity';
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
