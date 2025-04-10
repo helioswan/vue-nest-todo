@@ -4,7 +4,7 @@ import type { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue
 export async function authGuard(to: RouteLocationNormalized, from: RouteLocationNormalizedLoaded) {
   const { isAuthenticated } = useAuthStore()
 
-  if (!isAuthenticated && to.name !== 'Login') {
-    return { name: 'Login' }
+  if (!isAuthenticated && to.name !== 'signin') {
+    return { name: 'signin' }
   }
 }
