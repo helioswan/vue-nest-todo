@@ -6,8 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { BoardModule } from './board/board.module';
-import { ListModule } from './list/list.module';
-import { CardModule } from './card/card.module';
+import { TaskModule } from './board/task/task.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -37,8 +36,7 @@ import { CardModule } from './card/card.module';
     AuthModule,
     UserModule,
     BoardModule,
-    ListModule,
-    CardModule,
+    TaskModule,
   ],
 })
 export class AppModule {}

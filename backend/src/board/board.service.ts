@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { Model } from 'mongoose';
+import { Board } from './schemas/board.schema';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class BoardService {
-  create(createBoardDto: CreateBoardDto) {
-    return 'This action adds a new board';
+  constructor(@InjectModel(Board.name) private boardModel: Model<Board>) {}
+
+  async create(createBoardDto: CreateBoardDto, userId: string) {
+    return await this.boardModel.create({
+      title: createBoardDto.title,
+      userId,
+    });
   }
 
-  findAll() {
-    return `This action returns all board`;
+  async findMyBoards(userId: string) {
+    return await this.boardModel.find({ userId });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} board`;
+  async findOne(id: string) {
+    return await this.boardModel.findOne({ _id: id });
   }
 
-  update(id: number, updateBoardDto: UpdateBoardDto) {
-    return `This action updates a #${id} board`;
+  async update(id: string, userId: string, updateBoardDto: UpdateBoardDto) {
+    return await this.boardModel.findOne({ _id: id, userId }, updateBoardDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} board`;
+  async remove(id: string, userId: string) {
+    return await this.boardModel.deleteOne({ _id: id, userId });
   }
 }

@@ -7,10 +7,7 @@ export class Board {
   title: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
-  owner: mongoose.Types.ObjectId;
-
-  //   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
-  //   members: Types.ObjectId[];
+  userId: mongoose.Types.ObjectId;
 }
 
 export const BoardSchema = SchemaFactory.createForClass(Board);
