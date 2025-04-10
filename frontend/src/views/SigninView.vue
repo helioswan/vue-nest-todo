@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import SigninForm from '../components/auth/SigninForm.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="flex items-center justify-center mt-16"><SigninForm /></div>
 </template>

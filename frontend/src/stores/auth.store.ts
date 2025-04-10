@@ -6,12 +6,18 @@ export const useAuthStore = defineStore('auth', () => {
   const token = ref(null)
   const isAuthenticated = ref(false)
 
-  function login() {}
+  function signin() {
+    alert('signin')
+  }
+
+  function signup() {
+    alert('singup')
+  }
 
   function logout() {}
 
   function fetchUser() {}
 
   function refreshToken() {}
-  return { isAuthenticated, user, token, fetchUser, refreshToken, logout, login }
+  return { isAuthenticated, user, token, fetchUser, refreshToken, logout, signin, signup }
 })
