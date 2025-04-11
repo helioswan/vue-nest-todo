@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/stores/auth.store'
-import type { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router'
+import type { RouteLocationNormalized } from 'vue-router'
 
-export async function authGuard(to: RouteLocationNormalized, from: RouteLocationNormalizedLoaded) {
+export async function authGuard(to: RouteLocationNormalized) {
   const { isAuthenticated } = useAuthStore()
 
   if (!isAuthenticated && to.name !== 'signin') {
