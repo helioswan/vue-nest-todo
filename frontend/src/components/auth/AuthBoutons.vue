@@ -2,6 +2,7 @@
   <div>
     <div class="flex flex-wrap gap-4" v-if="authStore.isAuthenticated">
       <UButton
+        icon="i-lucide-log-out"
         label="Log out"
         @click.prevent="authStore.logout"
         size="xl"
