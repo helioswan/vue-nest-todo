@@ -1,18 +1,18 @@
 import type { SigninDto } from '@/dto/signin.dto'
 import type { SignupDto } from '@/dto/signup.dto'
-import type { User } from '@/interfaces/auth/user.interface'
-import type { Token } from '@/interfaces/auth/token.interface'
+import type { User } from '@/interfaces/auth/user.entity'
+import type { Token } from '@/interfaces/auth/token.entity'
 import AuthService from '@/services/auth.service'
 import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { reactive, ref, type Reactive, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore(
   'auth',
   () => {
     const user: Ref<User | undefined> = ref(undefined)
-    const token: Ref<Token | undefined> = ref(undefined)
+    const token: Reactive<Token> = reactive({ accessToken: '', refreshToken: '' })
     const isAuthenticated = ref(false)
     const toast = useToast()
     const router = useRouter()
@@ -25,7 +25,8 @@ export const useAuthStore = defineStore(
           description: 'You are now logged in.',
           color: 'success',
         })
-        setToken({ accessToken: res.data.accessToken, refreshToken: res.data.refreshToken })
+        const token = res.data.data
+        setToken({ accessToken: token.accessToken, refreshToken: token.refreshToken })
         isAuthenticated.value = true
         router.push({ name: 'home' })
       } catch (err) {
@@ -72,7 +73,7 @@ export const useAuthStore = defineStore(
     async function logout() {
       isAuthenticated.value = false
       user.value = undefined
-      token.value = undefined
+      Object.assign(token, { accessToken: '', refreshToken: '' })
       router.push({ name: 'signin' })
     }
 
@@ -81,14 +82,15 @@ export const useAuthStore = defineStore(
     }
 
     function setToken(new_token: Token) {
-      token.value = new_token
+      token.accessToken = new_token.accessToken
+      token.refreshToken = new_token.refreshToken
     }
 
     function getAccessToken() {
-      return token.value?.accessToken
+      return token.accessToken
     }
     function getRefreshToken() {
-      return token.value?.refreshToken
+      return token.refreshToken
     }
 
     return {
