@@ -3,13 +3,20 @@ import { authGuard } from './guards/auth.guard'
 import SigninView from '../views/SigninView.vue'
 import SignupView from '../views/SignupView.vue'
 import HomeView from '../views/HomeView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
       name: 'home',
+      beforeEnter: [authGuard],
+      component: HomeView,
+    },
+    {
+      path: '/board/:id',
+      name: 'board',
       beforeEnter: [authGuard],
       component: HomeView,
     },
@@ -23,6 +30,7 @@ const router = createRouter({
       name: 'signup',
       component: SignupView,
     },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
   ],
 })
 
