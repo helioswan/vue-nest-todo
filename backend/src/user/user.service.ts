@@ -18,7 +18,7 @@ export class UserService {
     if (!user) throw new NotFoundException();
 
     return {
-      name: user.name,
+      username: user.username,
       email: user.email,
     };
   }

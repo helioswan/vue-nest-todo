@@ -26,7 +26,7 @@ export class AuthService {
   ) {}
 
   async signup(signupDto: SignupDto) {
-    const { email, password, name } = signupDto;
+    const { email, password, username } = signupDto;
     const saltRounds = 10;
 
     const usedEmail = await this.userService.findByEmail(email);
@@ -36,8 +36,12 @@ export class AuthService {
     const hashedPassword = bcrypt.hashSync(password, salt);
     if (!hashedPassword) throw new InternalServerErrorException();
 
-    await this.userService.create({ email, name, password: hashedPassword });
-    return { email, name };
+    await this.userService.create({
+      email,
+      username,
+      password: hashedPassword,
+    });
+    return { email, username };
   }
 
   async login(loginDto: LoginDto) {
@@ -72,7 +76,7 @@ export class AuthService {
 
     const payload: JwtPayload = {
       sub: userId,
-      username: user.name,
+      username: user.username,
       email: user.email,
     };
 

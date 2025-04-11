@@ -10,7 +10,11 @@ describe('AuthController', () => {
 
   const mockAuthService = {
     signup: jest.fn((signupDto: SignupDto) => {
-      return { email: signupDto.email, id: '123456789', name: signupDto.name };
+      return {
+        email: signupDto.email,
+        id: '123456789',
+        username: signupDto.username,
+      };
     }),
     login: jest.fn(() => {
       return {
@@ -44,7 +48,7 @@ describe('AuthController', () => {
       const dto: SignupDto = {
         email: 'email@adress.com',
         password: '1234',
-        name: 'Test',
+        username: 'Test',
       };
 
       const result = await controller.signup(dto);
@@ -53,7 +57,7 @@ describe('AuthController', () => {
         user: {
           email: dto.email,
           id: '123456789',
-          name: dto.name,
+          username: dto.username,
         },
       });
       expect(mockAuthService.signup).toHaveBeenCalledWith(dto);

@@ -60,29 +60,32 @@ describe('AuthService', () => {
         _id: '123456789',
         email: 'email@adress.com',
         password: 'hashedpassword',
-        name: 'Name',
+        username: 'username',
       });
 
       const dto: SignupDto = {
         email: 'email@adress.com',
         password: 'password',
-        name: 'Name',
+        username: 'username',
       };
 
       await expect(service.signup(dto)).rejects.toThrow(ConflictException);
     });
 
-    it('should return email and name if signup is successful', async () => {
+    it('should return email and username if signup is successful', async () => {
       (mockUserService.findByEmail as jest.Mock).mockResolvedValue(null);
       (bcrypt.hashSync as jest.Mock).mockResolvedValue('hashed');
 
       const dto: SignupDto = {
         email: 'email@adress.com',
         password: 'password',
-        name: 'Name',
+        username: 'username',
       };
       const result = await service.signup(dto);
-      expect(result).toEqual({ email: 'email@adress.com', name: 'Name' });
+      expect(result).toEqual({
+        email: 'email@adress.com',
+        username: 'username',
+      });
     });
   });
 
@@ -96,7 +99,7 @@ describe('AuthService', () => {
     it('should throw UnauthorizedException if password does not match', async () => {
       (mockUserService.findByEmail as jest.Mock).mockResolvedValue({
         _id: '123456789',
-        name: 'Name',
+        username: 'username',
         email: 'email@adress.com',
         password: 'hashed',
       });
@@ -108,13 +111,13 @@ describe('AuthService', () => {
     it('should return tokens if login is successful', async () => {
       (mockUserService.findByEmail as jest.Mock).mockResolvedValue({
         _id: '123456789',
-        name: 'Name',
+        username: 'username',
         email: 'email@adress.com',
         password: 'hashed',
       });
       (mockUserService.findOne as jest.Mock).mockResolvedValue({
         _id: '123456789',
-        name: 'Name',
+        username: 'username',
         email: 'email@adress.com',
         password: 'hashed',
       });
@@ -155,7 +158,7 @@ describe('AuthService', () => {
       });
       (mockUserService.findOne as jest.Mock).mockResolvedValue({
         _id: '123456789',
-        name: 'Name',
+        username: 'username',
         email: 'email@adress.com',
         password: 'hashed',
       });
