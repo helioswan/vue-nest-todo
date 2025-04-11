@@ -42,7 +42,7 @@ describe('UserService', () => {
   describe('create', () => {
     it('should create a new user', async () => {
       const createUserDto: CreateUserDto = {
-        name: 'John Doe',
+        username: 'John Doe',
         email: 'john.doe@example.com',
         password: 'password',
       };
@@ -60,7 +60,7 @@ describe('UserService', () => {
     it('should return a user if found', async () => {
       const userId = 'user123';
       const foundUser = {
-        name: 'John Doe',
+        username: 'John Doe',
         email: 'john.doe@example.com',
         _id: userId,
       };
@@ -69,7 +69,7 @@ describe('UserService', () => {
       const result = await service.findOne(userId);
 
       expect(result).toEqual({
-        name: foundUser.name,
+        username: foundUser.username,
         email: foundUser.email,
       });
       expect(mockUserModel.findById).toHaveBeenCalledWith(userId);
@@ -86,7 +86,7 @@ describe('UserService', () => {
   describe('findByEmail', () => {
     it('should return a user if found', async () => {
       const email = 'john.doe@example.com';
-      const foundUser = { name: 'John Doe', email, _id: 'user123' };
+      const foundUser = { username: 'John Doe', email, _id: 'user123' };
       (mockUserModel.findOne as jest.Mock).mockResolvedValue(foundUser);
 
       const result = await service.findByEmail(email);
