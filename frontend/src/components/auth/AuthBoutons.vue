@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="flex flex-wrap gap-4" v-if="authStore.isAuthenticated">
-      <UButton label="Log out" size="xl" class="font-bold" :to="{ name: 'home' }" />
+      <UButton
+        label="Log out"
+        @click.prevent="authStore.logout"
+        size="xl"
+        class="font-bold"
+        :to="{ name: 'home' }"
+      />
     </div>
     <div class="flex flex-wrap gap-4" v-else>
       <UButton label="Sign in" size="xl" class="font-bold" :to="{ name: 'signin' }" />

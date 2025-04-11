@@ -26,8 +26,15 @@ const state = reactive<Partial<Schema>>({
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  console.log(event.data)
-  signin()
+  event.preventDefault()
+  const result = schema.safeParse(state)
+
+  if (!result.success) {
+    return console.log(result.error.formErrors.fieldErrors)
+  }
+
+  const { email, password } = result.data
+  await signin({ email, password })
 }
 </script>
 

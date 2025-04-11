@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 
 const { signup } = useAuthStore()
@@ -32,8 +32,15 @@ const state = reactive<Partial<Schema>>({
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  console.log(event.data)
-  signup()
+  event.preventDefault()
+  const result = schema.safeParse(state)
+
+  if (!result.success) {
+    return console.log(result.error.formErrors.fieldErrors)
+  }
+
+  const { username, email, password } = result.data
+  await signup({ username, email, password })
 }
 </script>
 
