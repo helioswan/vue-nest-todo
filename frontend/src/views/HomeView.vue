@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth.store'
 import BoardCard from '@/components/board/BoardCard.vue'
 import CreateBoardModal from '@/components/board/CreateBoardModal.vue'
 import { useBoardStore } from '@/stores/board.store'
 
-const open = ref(false)
 const { user } = useAuthStore()
 const boardStore = useBoardStore()
 
