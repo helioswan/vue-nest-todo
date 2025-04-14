@@ -6,14 +6,14 @@ export class UpdateTaskDto {
   @ApiProperty({ example: 'Task title' })
   @IsString()
   @MaxLength(100)
-  title?: string;
+  title: string;
 
   @ApiProperty({ example: 'Task description' })
   @IsString()
   @MaxLength(1000)
-  description?: string;
+  description: string;
 
   @ApiProperty({ example: TaskStatus.IN_PROGRESS })
   @IsEnum(TaskStatus)
-  status?: TaskStatus;
+  status: TaskStatus;
 }
