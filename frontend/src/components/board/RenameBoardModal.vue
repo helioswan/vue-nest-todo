@@ -61,8 +61,14 @@ async function onSubmit() {
 
     <template #footer>
       <UButton label="Rename" color="neutral" @click.prevent="onSubmit" />
-      <UButton label="Cancel" color="neutral" variant="outline" @click="closeModal" />
+      <UButton label="Cancel" color="neutral" variant="outline" @click.prevent="closeModal" />
     </template>
   </UModal>
-  <UButton icon="i-lucide-pen" @click.prevent="openModal" color="secondary">Rename</UButton>
+  <UButton
+    icon="i-lucide-pen"
+    @click.prevent="openModal"
+    color="neutral"
+    variant="ghost"
+    aria-label="Rename"
+  ></UButton>
 </template>
