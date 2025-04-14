@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Header from '@/components/layout/BaseHeader.vue'
+import BaseHeader from '@/components/layout/BaseHeader.vue'
 </script>
 
 <template>
   <UApp>
     <main class="min-h-screen">
-      <Header />
+      <BaseHeader />
       <RouterView />
     </main>
   </UApp>
