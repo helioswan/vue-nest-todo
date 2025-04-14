@@ -1,8 +1,8 @@
 import BoardService from '@/services/board.service'
 import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import type { CreateBoardDto } from '@/dto/create-board'
-import type { RenameBoardDto } from '@/dto/rename-board'
+import type { CreateBoardDto } from '@/dto/create-board.dto'
+import type { RenameBoardDto } from '@/dto/rename-board.dto'
 import type { Board } from '@/interfaces/board/board.entity'
 import { ref, type Ref } from 'vue'
 
@@ -11,6 +11,7 @@ export const useBoardStore = defineStore(
   () => {
     const toast = useToast()
     const boards: Ref<Board[] | undefined> = ref()
+    const board: Ref<Board | undefined> = ref()
 
     async function fetchBoards() {
       try {
@@ -21,6 +22,21 @@ export const useBoardStore = defineStore(
           toast.add({
             title: 'Failed to load boards',
             description: 'An error occurred while fetching the boards. Please try again.',
+            color: 'error',
+          })
+        }
+      }
+    }
+
+    async function fetchBoard(id: string) {
+      try {
+        const res = await BoardService.getBoard(id)
+        board.value = res.data.data
+      } catch (err) {
+        if (isAxiosError(err) && err.response) {
+          toast.add({
+            title: 'Failed to load board',
+            description: 'An error occurred while fetching the board. Please try again.',
             color: 'error',
           })
         }
@@ -87,7 +103,7 @@ export const useBoardStore = defineStore(
       fetchBoards()
     }
 
-    return { boards, createBoard, fetchBoards, renameBoard, deleteBoard }
+    return { boards, board, createBoard, fetchBoards, fetchBoard, renameBoard, deleteBoard }
   },
   { persist: true },
 )
