@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { authGuard } from './guards/auth.guard'
-import SigninView from '../views/SigninView.vue'
-import SignupView from '../views/SignupView.vue'
-import HomeView from '../views/HomeView.vue'
+import { authGuard } from '@/router/guards/auth.guard'
+import SigninView from '@/views/SigninView.vue'
+import SignupView from '@/views/SignupView.vue'
+import HomeView from '@/views/HomeView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
+import BoardView from '@/views/BoardView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,7 +19,7 @@ const router = createRouter({
       path: '/board/:id',
       name: 'board',
       beforeEnter: [authGuard],
-      component: HomeView,
+      component: BoardView,
     },
     {
       path: '/signin',
