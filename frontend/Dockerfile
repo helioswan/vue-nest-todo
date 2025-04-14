@@ -14,10 +14,9 @@ RUN npm install
 RUN npm run build
 RUN npm ci --only=production && npm cache clean --force
 
-FROM $IMAGE AS prod
+FROM nginx:alpine AS prod
 WORKDIR /app
-USER node
-COPY --chown=node:node --from=prod-build /app/dist /usr/share/nginx/html
-COPY --chown=node:node --from=prod-build /app/node_modules /app/node_modules
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=prod-build /app/dist /usr/share/nginx/html
 EXPOSE 80
-ENTRYPOINT [ "nginx", "-g",  "daemon off;" ]
+CMD ["nginx", "-g", "daemon off;"]
