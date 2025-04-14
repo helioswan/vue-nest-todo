@@ -7,10 +7,13 @@ const { createBoard } = useBoardStore()
 const open = ref(false)
 
 const schema = z.object({
-  title: z.string({
-    required_error: 'Title is required',
-  }),
+  title: z
+    .string({
+      required_error: 'Title is required',
+    })
+    .max(100, { message: 'Must be 100 or fewer characters long' }),
 })
+
 
 type Schema = z.output<typeof schema>
 
