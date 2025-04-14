@@ -26,7 +26,7 @@ function setupRefreshTokenResponseInterceptor() {
       if (
         error.response?.status === 401 &&
         !originalConfig._retry &&
-        originalConfig.url !== '/auth/signin'
+        originalConfig.url !== '/auth/login'
       ) {
         return handleTokenRefresh(originalConfig)
       }
