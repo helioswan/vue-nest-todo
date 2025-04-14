@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { reactive, ref, type Reactive, type Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import type { Task } from '@/interfaces/board/task.entity'
 import type { CreateTaskDto } from '@/dto/create-task.dto'
 import TaskService from '@/services/task.service'
@@ -11,7 +11,7 @@ export const useTaskStore = defineStore(
   'card',
   () => {
     const toast = useToast()
-    let tasks: Ref<Task[] | undefined> = ref()
+    const tasks: Ref<Task[] | undefined> = ref()
     const boardId = useBoardStore().board!._id
 
     async function fetchTasks() {

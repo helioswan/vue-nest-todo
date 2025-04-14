@@ -25,8 +25,8 @@ onMounted(() => {
         class="grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4"
         v-if="boardStore.boards && boardStore.boards.length > 0"
       >
-        <li v-for="(board, index) in boardStore.boards">
-          <BoardCard :board :key="index" />
+        <li v-for="(board, index) in boardStore.boards" :key="index">
+          <BoardCard :board />
         </li>
       </ul>
       <p class="text-lg text-center" v-else>No board found</p>

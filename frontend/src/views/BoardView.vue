@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { useBoardStore } from '@/stores/board.store'
 import { useTaskStore } from '@/stores/task.store'
 import { useRoute } from 'vue-router'
@@ -8,7 +8,7 @@ import TaskList from '@/components/board/task/TaskList.vue'
 import type { List } from '@/interfaces/board/list.entity'
 import CreateTaskModal from '@/components/board/task/CreateTaskModal.vue'
 import TaskCard from '@/components/board/task/TaskCard.vue'
-import { filterTaskByStatus } from '@/utils/sort-task-by-status.util'
+import { filterTaskByStatus } from '@/utils/filter-task-by-status.util'
 import type { Task } from '@/interfaces/board/task.entity'
 
 const boardStore = useBoardStore()
