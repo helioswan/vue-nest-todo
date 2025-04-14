@@ -17,7 +17,6 @@ const props = defineProps({
       </div>
     </template>
     <p>Created at: {{ formatDate(props.board.createdAt) }}</p>
-    <p>Updated at: {{ formatDate(props.board.updatedAt) }}</p>
     <template #footer>
       <div class="flex gap-2 justify-end">
         <UButton icon="i-lucide-eye" :to="{ name: 'board', params: { id: props.board._id } }"
