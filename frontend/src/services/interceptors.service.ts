@@ -5,11 +5,11 @@ import axiosInstance from './api.service'
 async function handleTokenRefresh(originalConfig: any) {
   const { getRefreshToken, setToken } = useAuthStore()
   try {
-    const { data } = await axiosInstance.post('/auth/refreshtoken', {
+    const res = await axiosInstance.post('/auth/refreshtoken', {
       refreshToken: getRefreshToken(),
     })
-
-    setToken(data)
+    const token = res.data.data
+    setToken(token)
 
     originalConfig._retry = true
     return axiosInstance(originalConfig)
@@ -42,7 +42,7 @@ function setupAuthRequestInterceptor() {
     (config) => {
       const token = getAccessToken()
       if (token) {
-        config.headers['x-access-token'] = token
+        config.headers['Authorization'] = 'Bearer ' + token
       }
       return config
     },
