@@ -1,9 +1,17 @@
+<script setup lang="ts">
+import { useAuthStore } from '@/stores/auth.store'
+
+const authStore = useAuthStore()
+</script>
+
 <template>
   <div>
     <div class="flex flex-wrap gap-4" v-if="authStore.isAuthenticated">
       <UButton
         icon="i-lucide-log-out"
-        label="Log out"
+        variant="ghost"
+        color="neutral"
+        aria-label="log out"
         @click.prevent="authStore.logout"
         size="xl"
         class="font-bold"
@@ -22,11 +30,5 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useAuthStore } from '@/stores/auth.store'
-
-const authStore = useAuthStore()
-</script>
 
 <style scoped></style>
