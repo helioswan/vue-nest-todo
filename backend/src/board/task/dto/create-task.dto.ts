@@ -5,7 +5,7 @@ export class CreateTaskDto {
   @ApiProperty({ example: 'Task title' })
   @IsString()
   @MinLength(1)
-  @MaxLength(300)
+  @MaxLength(100)
   title: string;
 
   @ApiProperty({ example: 'Task description' })

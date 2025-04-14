@@ -5,7 +5,7 @@ import { TaskStatus } from '../enums/TaskStatus.enum';
 export class UpdateTaskDto {
   @ApiProperty({ example: 'Task title' })
   @IsString()
-  @MaxLength(300)
+  @MaxLength(100)
   title?: string;
 
   @ApiProperty({ example: 'Task description' })
