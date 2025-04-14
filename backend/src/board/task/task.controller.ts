@@ -18,7 +18,7 @@ import { JwtPayload } from '../../auth/entities/jwt-payload.entity';
 
 @UseGuards(AuthGuard)
 @ApiBearerAuth()
-@Controller('task')
+@Controller('tasks')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 

@@ -14,7 +14,7 @@ export class Task {
   boardId: string;
 
   @Prop({ default: TaskStatus.TODO, type: String, enum: TaskStatus })
-  state: TaskStatus;
+  status: TaskStatus;
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userId: string;

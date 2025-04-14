@@ -1,16 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsEnum, IsString, MaxLength } from 'class-validator';
+import { TaskStatus } from '../enums/TaskStatus.enum';
 
 export class UpdateTaskDto {
   @ApiProperty({ example: 'Task title' })
   @IsString()
-  @IsOptional()
-  @MaxLength(300)
+  @MaxLength(100)
   title?: string;
 
   @ApiProperty({ example: 'Task description' })
   @IsString()
-  @IsOptional()
   @MaxLength(1000)
   description?: string;
+
+  @ApiProperty({ example: TaskStatus.IN_PROGRESS })
+  @IsEnum(TaskStatus)
+  status?: TaskStatus;
 }
