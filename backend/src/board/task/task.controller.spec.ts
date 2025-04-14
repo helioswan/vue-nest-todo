@@ -4,6 +4,7 @@ import { TaskController } from './task.controller';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { JwtPayload } from '../../auth/entities/jwt-payload.entity';
+import { TaskStatus } from './enums/TaskStatus.enum';
 
 describe('TaskController', () => {
   let controller: TaskController;
@@ -118,6 +119,7 @@ describe('TaskController', () => {
     const updateTaskDto = {
       title: 'Updated Task',
       description: 'Updated description',
+      status: TaskStatus.IN_PROGRESS,
     };
 
     (mockTaskService.update as jest.Mock).mockResolvedValue({

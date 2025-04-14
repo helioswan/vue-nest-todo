@@ -7,6 +7,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { NotFoundException } from '@nestjs/common';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { TaskStatus } from './enums/TaskStatus.enum';
 
 describe('TaskService', () => {
   let service: TaskService;
@@ -115,7 +116,11 @@ describe('TaskService', () => {
 
   describe('update', () => {
     it('should throw NotFoundException if task does not exist', async () => {
-      const updateTaskDto: UpdateTaskDto = { title: 'Updated Task' };
+      const updateTaskDto: UpdateTaskDto = {
+        title: 'Updated Task',
+        description: 'Task description',
+        status: TaskStatus.DONE,
+      };
       (mockTaskModel.findOneAndUpdate as jest.Mock).mockResolvedValue(null);
 
       await expect(
@@ -124,7 +129,11 @@ describe('TaskService', () => {
     });
 
     it('should update and return the task if found', async () => {
-      const updateTaskDto: UpdateTaskDto = { title: 'Updated Task' };
+      const updateTaskDto: UpdateTaskDto = {
+        title: 'Updated Task',
+        description: 'Task description',
+        status: TaskStatus.DONE,
+      };
       const updatedTask = { _id: 'taskId', ...updateTaskDto };
       (mockTaskModel.findOneAndUpdate as jest.Mock).mockResolvedValue(
         updatedTask,
