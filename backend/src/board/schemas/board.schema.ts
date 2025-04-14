@@ -1,7 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
-@Schema()
+@Schema({ timestamps: true })
 export class Board {
   @Prop({ required: true })
   title: string;
