@@ -27,12 +27,16 @@ const props = defineProps({
 })
 
 const schema = z.object({
-  title: z.string({
-    required_error: 'Title is required',
-  }),
-  description: z.string({
-    required_error: 'Description is required',
-  }),
+  title: z
+    .string({
+      required_error: 'Title is required',
+    })
+    .max(100, { message: 'Must be 100 or fewer characters long' }),
+  description: z
+    .string({
+      required_error: 'Description is required',
+    })
+    .max(1000, { message: 'Must be 1000 or fewer characters long' }),
   status: z.nativeEnum(TaskStatus),
 })
 

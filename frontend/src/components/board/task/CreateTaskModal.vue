@@ -9,12 +9,16 @@ const { board } = useBoardStore()
 const open = ref(false)
 
 const schema = z.object({
-  title: z.string({
-    required_error: 'Title is required',
-  }),
-  description: z.string({
-    required_error: 'Description is required',
-  }),
+  title: z
+    .string({
+      required_error: 'Title is required',
+    })
+    .max(100 , { message: 'Must be 100 or fewer characters long' }),
+  description: z
+    .string({
+      required_error: 'Description is required',
+    })
+    .max(1000, { message: 'Must be 1000 or fewer characters long' }),
 })
 
 type Schema = z.output<typeof schema>
@@ -53,7 +57,11 @@ async function onSubmit() {
           <UInput v-model="state.title" placeholder="Name your board" class="block" />
         </UFormField>
         <UFormField label="Description" name="description" required>
-          <UTextarea v-model="state.description" placeholder="Type your description..." class="block" />
+          <UTextarea
+            v-model="state.description"
+            placeholder="Type your description..."
+            class="block"
+          />
         </UFormField>
       </UForm>
     </template>
