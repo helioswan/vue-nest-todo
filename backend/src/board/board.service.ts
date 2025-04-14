@@ -38,7 +38,6 @@ export class BoardService {
   async remove(id: string, userId: string) {
     const result = await this.boardModel.deleteOne({ _id: id, userId });
 
-    console.log(result);
     if (result.deletedCount === 0) {
       throw new NotFoundException();
     }
