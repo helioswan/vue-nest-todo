@@ -51,7 +51,7 @@ async function onSubmit() {
 
     <template #footer>
       <UButton label="Create" color="neutral" @click.prevent="onSubmit" />
-      <UButton label="Cancel" color="neutral" variant="outline" @click="closeModal" />
+      <UButton label="Cancel" color="neutral" variant="outline" @click.prevent="closeModal" />
     </template>
   </UModal>
   <UButton label="Create" icon="i-lucide-plus" @click.prevent="openModal" />
