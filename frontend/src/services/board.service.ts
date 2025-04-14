@@ -15,7 +15,7 @@ async function createBoard(createBoardDto: CreateBoardDto) {
 }
 
 async function renameBoard(renameBoardDto: RenameBoardDto, id: string) {
-  return await api.patch(`/boards/${id}`, renameBoardDto)
+  return await api.put(`/boards/${id}`, renameBoardDto)
 }
 
 async function deleteBoard(id: string) {

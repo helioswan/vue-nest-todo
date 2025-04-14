@@ -11,7 +11,7 @@ async function createTask(createBoardDto: CreateBoardDto) {
 }
 
 async function updateTask(updateTaskDto: UpdateTaskDto, id: string) {
-  return await api.patch(`/tasks/${id}`, updateTaskDto)
+  return await api.put(`/tasks/${id}`, updateTaskDto)
 }
 
 async function deleteTask(id: string) {
