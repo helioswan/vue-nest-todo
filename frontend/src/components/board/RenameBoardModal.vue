@@ -17,11 +17,9 @@ const props = defineProps({
 })
 
 const schema = z.object({
-  title: z
-    .string({
-      required_error: 'Title is required',
-    })
-    .max(100, { message: 'Must be 100 or fewer characters long' }),
+  title: z.string({
+    required_error: 'Title is required',
+  }),
 })
 
 type Schema = z.output<typeof schema>
