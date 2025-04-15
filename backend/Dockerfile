@@ -4,6 +4,7 @@ FROM $IMAGE AS builder
 WORKDIR /app
 COPY package*.json .
 COPY . .
+RUN npm install npm@latest
 
 FROM builder AS dev
 EXPOSE 3000
