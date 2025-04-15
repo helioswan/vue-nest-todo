@@ -35,6 +35,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
   const { email, password } = result.data
   await signin({ email, password })
+  state.email = undefined
+  state.password = undefined
 }
 </script>
 

@@ -36,6 +36,8 @@ watch(
   },
 )
 
+taskStore.setBoardId(route.params.id as string)
+
 onMounted(() => {
   boardStore.fetchBoard(route.params.id as string)
   taskStore.fetchTasks()

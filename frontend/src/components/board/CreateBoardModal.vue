@@ -38,6 +38,7 @@ async function onSubmit() {
 
   const { title } = result.data
   await createBoard({ title })
+  state.title = undefined
   closeModal()
 }
 </script>
