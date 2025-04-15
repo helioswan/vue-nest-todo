@@ -2,10 +2,8 @@
 import * as z from 'zod'
 import { reactive, ref } from 'vue'
 import { useTaskStore } from '@/stores/task.store'
-import { useBoardStore } from '@/stores/board.store'
 
-const { createTask } = useTaskStore()
-const { board } = useBoardStore()
+const { createTask, boardId } = useTaskStore()
 const open = ref(false)
 
 const schema = z.object({
@@ -44,7 +42,9 @@ async function onSubmit() {
   }
 
   const { title, description } = result.data
-  await createTask({ title, description, boardId: board!._id })
+  await createTask({ title, description, boardId })
+  state.title = undefined
+  state.description = undefined
   closeModal()
 }
 </script>

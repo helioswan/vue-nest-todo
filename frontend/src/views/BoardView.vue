@@ -36,6 +36,8 @@ watch(
   },
 )
 
+taskStore.setBoardId(route.params.id as string)
+
 onMounted(() => {
   boardStore.fetchBoard(route.params.id as string)
   taskStore.fetchTasks()
@@ -53,10 +55,10 @@ onMounted(() => {
           icon="i-lucide-arrow-left"
           :to="{ name: 'home' }"
         />
-        <h1 class="text-2xl font-bold">{{ boardStore.board?.title }}</h1>
+        <h1 class="text-2xl font-bold text-wrap break-all">{{ boardStore.board?.title }}</h1>
       </div>
       <ul class="flex gap-8 overflow-x-auto">
-        <li v-for="(list, listIndex) in lists" class="md:min-w-96 min-w-72" :key="listIndex">
+        <li v-for="(list, listIndex) in lists" class="md:w-96 w-72" :key="listIndex">
           <TaskList :title="list.title" :color="list.color">
             <li v-for="(task, taskIndex) in tasks[list.status]" :key="taskIndex">
               <TaskCard :task />

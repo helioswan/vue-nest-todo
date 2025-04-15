@@ -86,8 +86,8 @@ export class BoardController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string, @ActiveUser() user: JwtPayload) {
-    await this.boardService.remove(id, user.sub);
+  async remove(@Param('id') id: string) {
+    await this.boardService.remove(id);
     return {
       message: 'Board deleted successfully',
     };

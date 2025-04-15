@@ -1,3 +1,4 @@
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store'
 import axiosInstance from './api.service'
 
@@ -11,7 +12,6 @@ async function handleTokenRefresh(originalConfig: any) {
     const token = res.data.data
     setToken(token)
 
-    originalConfig._retry = true
     return axiosInstance(originalConfig)
   } catch (error) {
     return Promise.reject(error)
@@ -19,17 +19,19 @@ async function handleTokenRefresh(originalConfig: any) {
 }
 
 function setupRefreshTokenResponseInterceptor() {
+  const router = useRouter()
   axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
       const originalConfig = error.config
       if (
         error.response?.status === 401 &&
-        !originalConfig._retry &&
-        originalConfig.url !== '/auth/login'
+        originalConfig.url !== '/auth/login' &&
+        originalConfig.url !== '/auth/refreshtoken'
       ) {
         return handleTokenRefresh(originalConfig)
       }
+      router.push({ name: 'signin' })
       return Promise.reject(error)
     },
   )

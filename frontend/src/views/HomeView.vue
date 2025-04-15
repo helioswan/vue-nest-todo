@@ -15,7 +15,7 @@ onMounted(() => {
 
 <template>
   <div class="container mx-auto md:px-6 px-5 my-16">
-    <h1 class="text-2xl font-bold mb-12">Welcome {{ user?.username }}!</h1>
+    <h1 class="text-2xl font-bold mb-12 text-wrap break-all">Welcome {{ user?.username }}!</h1>
     <section>
       <div class="flex justify-between flex-wrap border-b mb-10 pb-4">
         <h2 class="text-xl font-bold">Your boards</h2>

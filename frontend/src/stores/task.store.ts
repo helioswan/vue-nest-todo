@@ -5,18 +5,17 @@ import type { Task } from '@/interfaces/board/task.entity'
 import type { CreateTaskDto } from '@/dto/create-task.dto'
 import TaskService from '@/services/task.service'
 import type { UpdateTaskDto } from '@/dto/update-task.dto'
-import { useBoardStore } from './board.store'
 
 export const useTaskStore = defineStore(
   'task',
   () => {
     const toast = useToast()
-    const tasks: Ref<Task[]> = ref([  ])
-    const boardId = useBoardStore().board!._id
+    const tasks: Ref<Task[]> = ref([])
+    const boardId = ref('')
 
     async function fetchTasks() {
       try {
-        const res = await TaskService.getTasksByBoardId(boardId)
+        const res = await TaskService.getTasksByBoardId(boardId.value)
         tasks.value = res.data.data
       } catch (err) {
         if (isAxiosError(err) && err.response) {
@@ -89,7 +88,11 @@ export const useTaskStore = defineStore(
       fetchTasks()
     }
 
-    return { fetchTasks, deleteTask, updateTask, createTask, tasks }
+    function setBoardId(new_id: string) {
+      boardId.value = new_id
+    }
+
+    return { fetchTasks, deleteTask, updateTask, createTask, tasks, boardId , setBoardId }
   },
   { persist: true },
 )
