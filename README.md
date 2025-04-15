@@ -33,6 +33,7 @@ Before running the project, make sure you have the following installed:
 1. Clone the repo
    ```sh
    git clone https://github.com/helioswan/vue-nest-todo.git
+   cd vue-nest-todo
    ```
 2. Copy the example environment file
 
@@ -52,7 +53,7 @@ This project uses **Docker Compose** to run both development and production envi
 To run the application in **development** mode, use the following command:
 
 ```bash
-docker-compose -f docker-compose.dev.yml up --build
+docker-compose -f 'docker-compose.dev.yml' up --build -d
 ```
 
 This will start the frontend and backend services in development mode, with hot-reloading enabled.
@@ -62,7 +63,7 @@ This will start the frontend and backend services in development mode, with hot-
 To build and run the application in **production** mode, use this command:
 
 ```bash
-docker-compose -f docker-compose.prod.yml up --build
+docker-compose -f 'docker-compose.prod.yml' up --build -d
 ```
 
 In production mode, optimizations are made for better performance, and services will run in detached mode.
@@ -90,6 +91,5 @@ To run this project, you will need to add the following environment variables to
 - `VITE_API_URL` – The URL for the backend API (used in frontend)
 
 - `VITE_BASE_URL` – The base URL for the frontend (used in frontend)
-
 
 Make sure to replace any sensitive information such as passwords or secrets with the appropriate values for your environment.

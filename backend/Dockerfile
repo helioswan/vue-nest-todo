@@ -1,4 +1,4 @@
-ARG IMAGE=node:22.14.0-alpine
+ARG IMAGE=node:20.19.0-alpine
 
 FROM $IMAGE AS builder
 WORKDIR /app
