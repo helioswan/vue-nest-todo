@@ -21,6 +21,7 @@ describe('BoardService', () => {
       findOneAndUpdate: jest.fn(),
       findById: jest.fn(),
       deleteOne: jest.fn(),
+      findByIdAndDelete: jest.fn(),
     };
 
     userId = 'user123';
@@ -117,24 +118,25 @@ describe('BoardService', () => {
     it('should remove the board', async () => {
       const deleteResult = { deletedCount: 1 };
 
-      (mockBoardModel.deleteOne as jest.Mock).mockResolvedValue(deleteResult);
+      (mockBoardModel.findByIdAndDelete as jest.Mock).mockResolvedValue(
+        deleteResult,
+      );
 
-      const result = await service.remove(boardId, userId);
+      const result = await service.remove(boardId);
       expect(result).toEqual(deleteResult);
-      expect(mockBoardModel.deleteOne).toHaveBeenCalledWith({
+      expect(mockBoardModel.findByIdAndDelete).toHaveBeenCalledWith({
         _id: boardId,
-        userId,
       });
     });
 
     it('should throw NotFoundException if board not found', async () => {
-      const deleteResult = { deletedCount: 0 };
+      const deleteResult = undefined;
 
-      (mockBoardModel.deleteOne as jest.Mock).mockResolvedValue(deleteResult);
-
-      await expect(service.remove(boardId, userId)).rejects.toThrow(
-        NotFoundException,
+      (mockBoardModel.findByIdAndDelete as jest.Mock).mockResolvedValue(
+        deleteResult,
       );
+
+      await expect(service.remove(boardId)).rejects.toThrow(NotFoundException);
     });
   });
 });

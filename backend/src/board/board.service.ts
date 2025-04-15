@@ -38,7 +38,7 @@ export class BoardService {
   async remove(id: string) {
     const result = await this.boardModel.findByIdAndDelete({ _id: id });
 
-    if (result) {
+    if (!result) {
       throw new NotFoundException();
     }
 

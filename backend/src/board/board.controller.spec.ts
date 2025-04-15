@@ -144,9 +144,9 @@ describe('BoardController', () => {
       (mockBoardService.remove as jest.Mock).mockResolvedValue(serviceResponse);
 
       const response = { message: 'Board deleted successfully' };
-      const result = await controller.remove('1', user);
+      const result = await controller.remove('1');
       expect(result).toEqual(response);
-      expect(mockBoardService.remove).toHaveBeenCalledWith('1', user.sub);
+      expect(mockBoardService.remove).toHaveBeenCalledWith('1');
     });
   });
 });
