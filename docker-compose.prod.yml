@@ -28,6 +28,7 @@ services:
       - database
     networks:
       - db
+      - app
     ports:
       - ${BACKEND_PORT}:3000
 
