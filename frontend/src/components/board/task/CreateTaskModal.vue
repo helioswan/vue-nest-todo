@@ -2,7 +2,6 @@
 import * as z from 'zod'
 import { reactive, ref } from 'vue'
 import { useTaskStore } from '@/stores/task.store'
-import { useBoardStore } from '@/stores/board.store'
 
 const { createTask, boardId } = useTaskStore()
 const open = ref(false)
