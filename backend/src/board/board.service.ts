@@ -35,10 +35,10 @@ export class BoardService {
     );
   }
 
-  async remove(id: string, userId: string) {
-    const result = await this.boardModel.deleteOne({ _id: id, userId });
+  async remove(id: string) {
+    const result = await this.boardModel.findByIdAndDelete({ _id: id });
 
-    if (result.deletedCount === 0) {
+    if (result) {
       throw new NotFoundException();
     }
 

@@ -3,8 +3,8 @@ ARG IMAGE=node:20.19.0-alpine
 FROM $IMAGE AS builder
 WORKDIR /app
 COPY package*.json .
+RUN npm install
 COPY . .
-RUN npm install npm@latest
 
 FROM builder AS dev
 EXPOSE 3000
