@@ -42,8 +42,8 @@ const items: DropdownMenuItem[][] = [
 <template>
   <UCard>
     <template #header>
-      <div class="flex flex-wrap gap-4 justify-between">
-        <h3 class="text-xl font-bold">{{ props.task.title }}</h3>
+      <div class="flex gap-4 justify-between">
+        <h3 class="text-xl font-bold text-wrap w-full break-all">{{ props.task.title }}</h3>
         <UDropdownMenu
           :items="items"
           :ui="{ content: 'w-48' }"
@@ -71,7 +71,7 @@ const items: DropdownMenuItem[][] = [
       </div>
     </template>
 
-    <p>
+    <p class="text-wrap break-all">
       {{ props.task.description }}
     </p>
   </UCard>

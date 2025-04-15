@@ -11,8 +11,8 @@ const props = defineProps({
 <template>
   <UCard>
     <template #header>
-      <div class="flex justify-between flex-wrap">
-        <h3 class="text-xl font-bold">{{ props.board.title }}</h3>
+      <div class="flex justify-between">
+        <h3 class="text-xl font-bold text-wrap break-all">{{ props.board.title }}</h3>
         <RenameBoardModal :id="props.board._id" :title="props.board.title" />
       </div>
     </template>
