@@ -25,7 +25,7 @@ This section highlights the core technologies that are used in this project.
 
 Before running the project, make sure you have the following installed:
 
-- [Node.js](https://nodejs.org/) (v18 or later)
+- [Node.js](https://nodejs.org/) (v20 or later)
 - [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
 
 ### Clone the repository
