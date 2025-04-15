@@ -2,13 +2,11 @@ services:
   database:
     image: mongo
     restart: always
-    ports:
-      - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     networks:
-      - backend
+      - db
     volumes:
       - mongo-data:/data/db
 
@@ -22,22 +20,36 @@ services:
       - DB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
       - PORT=${BACKEND_PORT}
       - JWT_SECRET=${JWT_SECRET}
-      - DB_URI=${DB_URI}
+      - DB_URI=mongodb://database:27017
       - DB_NAME=${DB_NAME}
+      - CORS_ORIGIN=${VITE_BASE_URL}
       - NODE_ENV=production
-
     depends_on:
       - database
     networks:
-      - backend
+      - db
+      - app
     ports:
-      - 3000:${BACKEND_PORT}
-    volumes:
-      - ./backend:/app
+      - ${BACKEND_PORT}:3000
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: prod
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+      - VITE_NODE_ENV=production
+    depends_on:
+      - api
+    networks:
+      - app
+    ports:
+      - ${FRONTEND_PORT}:80
 
 networks:
-  backend:
+  db:
+  app:
 
 volumes:
-  backend:
   mongo-data:

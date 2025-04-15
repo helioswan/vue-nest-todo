@@ -8,10 +8,10 @@ import type { UpdateTaskDto } from '@/dto/update-task.dto'
 import { useBoardStore } from './board.store'
 
 export const useTaskStore = defineStore(
-  'card',
+  'task',
   () => {
     const toast = useToast()
-    const tasks: Ref<Task[] | undefined> = ref()
+    const tasks: Ref<Task[]> = ref([  ])
     const boardId = useBoardStore().board!._id
 
     async function fetchTasks() {

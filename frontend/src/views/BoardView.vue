@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, watch } from 'vue'
 import { useBoardStore } from '@/stores/board.store'
 import { useTaskStore } from '@/stores/task.store'
 import { useRoute } from 'vue-router'
@@ -27,18 +27,18 @@ const tasks = reactive({
   Done: [] as Task[],
 })
 
-function filterTasks() {
-  if (taskStore.tasks) {
-    tasks['To do'] = filterTaskByStatus(taskStore.tasks, TaskStatus.TODO)
-    tasks['In progress'] = filterTaskByStatus(taskStore.tasks, TaskStatus.IN_PROGRESS)
-    tasks['Done'] = filterTaskByStatus(taskStore.tasks, TaskStatus.DONE)
-  }
-}
+watch(
+  () => taskStore.tasks,
+  () => {
+    lists.forEach((list) => {
+      tasks[list.title as TaskStatus] = filterTaskByStatus(taskStore.tasks, list.status)
+    })
+  },
+)
 
 onMounted(() => {
   boardStore.fetchBoard(route.params.id as string)
   taskStore.fetchTasks()
-  filterTasks()
 })
 </script>
 
